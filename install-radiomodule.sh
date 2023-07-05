@@ -54,4 +54,9 @@ run "grep -q 'dtparam=act_led_activelow=on' /boot/config.txt || echo 'dtparam=ac
 say "Disabling HDMI"
 run "perl -i -pe 's/^exit 0/\/usr\/bin\/tvservice -o; exit 0/g' /etc/rc.local"
 
+say "Installing PipeWire"
+echo 'APT::Default-Release "stable";' | sudo tee /etc/apt/apt.conf.d/99defaultrelease
+echo "deb http://ftp.be.debian.org/debian/ testing main contrib non-free" | sudo tee /etc/apt/sources.list.d/testing.list
+sudo apt-get update --allow-insecure-repositories
+sudo apt -t testing install pipewire wireplumber libspa-0.2-bluetooth
 say "Please reboot system. (sudo reboot)"
